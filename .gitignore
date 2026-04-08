@@ -1,5 +1,25 @@
 .vs/
 bin/
 obj/
+out/
 *.user
 *.suo
+*.rsuser
+*.userprefs
+*.sln.docstates
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Node (caso use ferramentas web)
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
