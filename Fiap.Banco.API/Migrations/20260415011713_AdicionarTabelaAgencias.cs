@@ -5,21 +5,23 @@
 namespace Fiap.Banco.API.Migrations
 {
     /// <inheritdoc />
-    public partial class CriarTabelas2 : Migration
+    public partial class AdicionarTabelaAgencias : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Funcionarios",
+                name: "Agencias",
                 columns: table => new
                 {
-                    idFuncionarios = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1")
+                    idAgencia = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    nmAgencia = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    dsEndereco = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionarios", x => x.idFuncionarios);
+                    table.PrimaryKey("PK_Agencias", x => x.idAgencia);
                 });
         }
 
@@ -27,7 +29,7 @@ namespace Fiap.Banco.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Funcionarios");
+                name: "Agencias");
         }
     }
 }

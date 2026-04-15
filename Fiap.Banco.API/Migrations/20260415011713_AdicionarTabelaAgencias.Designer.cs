@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace Fiap.Banco.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260408014517_CriarTabelas")]
-    partial class CriarTabelas
+    [Migration("20260415011713_AdicionarTabelaAgencias")]
+    partial class AdicionarTabelaAgencias
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,27 @@ namespace Fiap.Banco.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Fiap.Banco.API.Models.Agencia", b =>
+                {
+                    b.Property<int>("idAgencia")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idAgencia"));
+
+                    b.Property<string>("dsEndereco")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("nmAgencia")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("idAgencia");
+
+                    b.ToTable("Agencias");
+                });
 
             modelBuilder.Entity("Fiap.Banco.API.Models.Banco", b =>
                 {
@@ -65,6 +86,19 @@ namespace Fiap.Banco.API.Migrations
                     b.HasIndex("BancoId");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("Fiap.Banco.API.Models.Funcionario", b =>
+                {
+                    b.Property<int>("idFuncionarios")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idFuncionarios"));
+
+                    b.HasKey("idFuncionarios");
+
+                    b.ToTable("Funcionarios");
                 });
 
             modelBuilder.Entity("Fiap.Banco.API.Models.Cliente", b =>

@@ -22,6 +22,27 @@ namespace Fiap.Banco.API.Migrations
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Fiap.Banco.API.Models.Agencia", b =>
+                {
+                    b.Property<int>("idAgencia")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idAgencia"));
+
+                    b.Property<string>("dsEndereco")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("nmAgencia")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("idAgencia");
+
+                    b.ToTable("Agencias");
+                });
+
             modelBuilder.Entity("Fiap.Banco.API.Models.Banco", b =>
                 {
                     b.Property<int>("idBanco")

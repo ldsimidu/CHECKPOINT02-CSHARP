@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace Fiap.Banco.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260408014957_CriarTabelas2")]
-    partial class CriarTabelas2
+    [Migration("20260415010529_InicioScript")]
+    partial class InicioScript
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
