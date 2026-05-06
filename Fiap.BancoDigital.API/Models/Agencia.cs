@@ -1,7 +1,12 @@
-﻿namespace Fiap.BancoDigital.API.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Fiap.BancoDigital.API.Models;
+
+
+[Table("PB_AGENCIAS")]
 public class Agencia
 {
+
     public int Id { get; set; }
 
     public string Numero { get; set; } = string.Empty;

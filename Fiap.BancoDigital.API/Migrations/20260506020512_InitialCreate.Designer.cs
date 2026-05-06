@@ -12,7 +12,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace Fiap.BancoDigital.API.Migrations
 {
     [DbContext(typeof(BancoDbContext))]
-    [Migration("20260506014651_InitialCreate")]
+    [Migration("20260506020512_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
