@@ -1,6 +1,0 @@
-@Fiap.BancoDigital.API_HostAddress = http://localhost:5094
-
-GET {{Fiap.BancoDigital.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
