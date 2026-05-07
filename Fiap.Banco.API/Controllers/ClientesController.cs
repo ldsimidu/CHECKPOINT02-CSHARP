@@ -19,14 +19,20 @@ namespace Fiap.Banco.API.Controllers
         [HttpPost("pf")]
         public async Task<ActionResult<PessoaFisica>> PostPessoaFisica([FromBody] CadastrarPessoaFisicaRequest request)
         {
-            var agenciaExiste = await _context.Agencias.AnyAsync(a => a.idAgencia == request.agenciaId);
-            if (!agenciaExiste)
+            var agencia = await _context.Agencias
+                .FromSqlInterpolated($@"SELECT * FROM ""Agencias"" WHERE ""idAgencia"" = {request.agenciaId}")
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (agencia == null)
             {
                 return NotFound($"Agência {request.agenciaId} não encontrada.");
             }
 
-            var cpfJaExiste = await _context.PessoasFisicas.AnyAsync(p => p.cpf == request.cpf);
-            if (cpfJaExiste)
+            var clientePfExistente = await _context.PessoasFisicas
+                .FromSqlInterpolated($@"SELECT * FROM ""AgenciaClientes"" WHERE ""TipoCliente"" = 'PF' AND ""cpf"" = {request.cpf}")
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (clientePfExistente != null)
             {
                 return Conflict("CPF já cadastrado.");
             }
@@ -48,14 +54,20 @@ namespace Fiap.Banco.API.Controllers
         [HttpPost("pj")]
         public async Task<ActionResult<PessoaJuridica>> PostPessoaJuridica([FromBody] CadastrarPessoaJuridicaRequest request)
         {
-            var agenciaExiste = await _context.Agencias.AnyAsync(a => a.idAgencia == request.agenciaId);
-            if (!agenciaExiste)
+            var agencia = await _context.Agencias
+                .FromSqlInterpolated($@"SELECT * FROM ""Agencias"" WHERE ""idAgencia"" = {request.agenciaId}")
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (agencia == null)
             {
                 return NotFound($"Agência {request.agenciaId} não encontrada.");
             }
 
-            var cnpjJaExiste = await _context.PessoasJuridicas.AnyAsync(p => p.cnpj == request.cnpj);
-            if (cnpjJaExiste)
+            var clientePjExistente = await _context.PessoasJuridicas
+                .FromSqlInterpolated($@"SELECT * FROM ""AgenciaClientes"" WHERE ""TipoCliente"" = 'PJ' AND ""cnpj"" = {request.cnpj}")
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (clientePjExistente != null)
             {
                 return Conflict("CNPJ já cadastrado.");
             }

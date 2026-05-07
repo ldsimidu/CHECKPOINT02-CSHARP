@@ -2,6 +2,7 @@ using Fiap.Banco.API.Data;
 using Fiap.Banco.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Fiap.Banco.API.Controllers
 {
@@ -25,8 +26,23 @@ namespace Fiap.Banco.API.Controllers
                 return NotFound($"Cliente {request.clienteId} não encontrado.");
             }
 
-            var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.idProduto == request.produtoId && p.ativo);
-            if (produto == null)
+            var connection = _context.Database.GetDbConnection();
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync();
+            }
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = @"SELECT COUNT(1) FROM ""Produtos"" WHERE ""idProduto"" = :produtoId AND ""ativo"" = 1";
+
+            var parametro = command.CreateParameter();
+            parametro.ParameterName = "produtoId";
+            parametro.Value = request.produtoId;
+            command.Parameters.Add(parametro);
+
+            var scalar = await command.ExecuteScalarAsync();
+            var produtoAtivoCount = Convert.ToInt32(scalar ?? 0);
+            if (produtoAtivoCount == 0)
             {
                 return NotFound($"Produto {request.produtoId} não encontrado ou inativo.");
             }

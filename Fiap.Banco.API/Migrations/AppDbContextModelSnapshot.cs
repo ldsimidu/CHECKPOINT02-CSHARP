@@ -71,9 +71,6 @@ namespace Fiap.Banco.API.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int?>("BancoidBanco")
-                        .HasColumnType("NUMBER(10)");
-
                     b.Property<string>("TipoCliente")
                         .IsRequired()
                         .HasMaxLength(8)
@@ -88,11 +85,9 @@ namespace Fiap.Banco.API.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("BancoidBanco");
-
                     b.HasIndex("agenciaId");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("AgenciaClientes", (string)null);
 
                     b.HasDiscriminator<string>("TipoCliente").HasValue("Cliente");
 
@@ -161,8 +156,8 @@ namespace Fiap.Banco.API.Migrations
                         .HasMaxLength(21)
                         .HasColumnType("NVARCHAR2(21)");
 
-                    b.Property<bool>("ativo")
-                        .HasColumnType("BOOLEAN");
+                    b.Property<int>("ativo")
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("nomeProduto")
                         .IsRequired()
@@ -259,10 +254,6 @@ namespace Fiap.Banco.API.Migrations
 
             modelBuilder.Entity("Fiap.Banco.API.Models.Cliente", b =>
                 {
-                    b.HasOne("Fiap.Banco.API.Models.Banco", null)
-                        .WithMany("Clientes")
-                        .HasForeignKey("BancoidBanco");
-
                     b.HasOne("Fiap.Banco.API.Models.Agencia", "Agencia")
                         .WithMany()
                         .HasForeignKey("agenciaId")
@@ -289,11 +280,6 @@ namespace Fiap.Banco.API.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("Produto");
-                });
-
-            modelBuilder.Entity("Fiap.Banco.API.Models.Banco", b =>
-                {
-                    b.Navigation("Clientes");
                 });
 #pragma warning restore 612, 618
         }
