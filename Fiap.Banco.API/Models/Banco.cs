@@ -11,7 +11,5 @@ namespace Fiap.Banco.API.Models
         public string nomeBanco { get; set; }
 
         public DateTime dtCriacao { get; set; }
-
-        public ICollection<Cliente>? Clientes { get; set; }
     }
 }
