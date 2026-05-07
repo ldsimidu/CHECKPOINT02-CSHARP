@@ -10,7 +10,9 @@ namespace Fiap.Banco.API.Models
 
         public string nome { get; set; }
 
-        [ForeignKey("BancoId")]
-        public Banco? Banco { get; set; }
+        public int agenciaId { get; set; }
+
+        [ForeignKey("agenciaId")]
+        public Agencia? Agencia { get; set; }
     }
 }
